@@ -1,41 +1,168 @@
-<script>
-  const noBtn = document.getElementById("no");
-  const box = document.querySelector(".box");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Surprise ❤️</title>
 
-  // ensure starting position
-  noBtn.style.position = "absolute";
-  noBtn.style.left = "50%";
-  noBtn.style.top = "70%";
-  noBtn.style.transform = "translateX(-50%)";
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff9aa2, #ffb7b2, #ffd1dc);
+    background-size: 400% 400%;
+    animation: bgFlow 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  @keyframes bgFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .hidden { display: none; }
+
+  .box {
+    position: relative;
+    max-width: 90%;
+    padding: 35px 25px;
+    border-radius: 22px;
+    background: linear-gradient(
+      135deg,
+      rgba(0,0,0,0.5),
+      rgba(255,75,110,0.35)
+    );
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+
+  p {
+    color: #ffeef2;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  button {
+    font-size: 17px;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 30px;
+    margin: 15px 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.08);
+  }
+
+  .primary {
+    background: #ff4b6e;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(255,75,110,0.6);
+  }
+
+  #no {
+    position: absolute;
+    background: #fff;
+    color: #ff4b6e;
+  }
+
+  .float {
+    position: absolute;
+    bottom: -20px;
+    font-size: 26px;
+    animation: floatUp linear forwards;
+    opacity: 0.9;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-110vh); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="box" id="page1">
+  <h1>🎁 Congratulations 🎁</h1>
+  <p>
+    You’ve unlocked a special gift 💃<br><br>
+    Click below to avail your dress 👗✨
+  </p>
+  <button class="primary" onclick="showProposal()">
+    Click here to avail your dress
+  </button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="box hidden" id="page2">
+  <h1>Sumo ❤️</h1>
+  <p>
+    You are my favorite thought,<br>
+    my safest place,<br>
+    my forever wish 💕<br><br>
+    Will you be mine forever? 💍
+  </p>
+
+  <button class="primary" onclick="yesClick()">YES 💖</button>
+  <button id="no">NO 🙈</button>
+</div>
+
+<script>
+  const page1 = document.getElementById("page1");
+  const page2 = document.getElementById("page2");
+  const noBtn = document.getElementById("no");
+
+  function showProposal() {
+    page1.classList.add("hidden");
+    page2.classList.remove("hidden");
+  }
 
   function moveNo() {
-    const boxRect = box.getBoundingClientRect();
-    const btnRect = noBtn.getBoundingClientRect();
+    const box = page2.getBoundingClientRect();
+    const btn = noBtn.getBoundingClientRect();
+    const pad = 12;
 
-    const padding = 10;
-
-    const maxX = boxRect.width - btnRect.width - padding;
-    const maxY = boxRect.height - btnRect.height - padding;
-
-    const x = Math.random() * maxX + padding;
-    const y = Math.random() * maxY + padding;
+    const x = Math.random() * (box.width - btn.width - pad);
+    const y = Math.random() * (box.height - btn.height - pad);
 
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
   }
 
-  // run away BEFORE click happens
   noBtn.addEventListener("mouseenter", moveNo);
   noBtn.addEventListener("mousedown", moveNo);
-  noBtn.addEventListener("touchstart", moveNo); // mobile
+  noBtn.addEventListener("touchstart", moveNo);
 
   function yesClick() {
     document.body.innerHTML = `
-      <h1 style="color:white; font-size:38px;">
+      <h1 style="color:white; font-size:36px;">
         Yayyyy 🥹❤️<br><br>
         I love you Sumo 💍✨
       </h1>`;
-    setInterval(spawnLove, 200);
+    setInterval(spawnLove, 220);
   }
 
   function spawnLove() {
@@ -49,6 +176,8 @@
     setTimeout(() => el.remove(), 6000);
   }
 
-  setInterval(spawnLove, 350);
+  setInterval(spawnLove, 400);
 </script>
 
+</body>
+</html>
