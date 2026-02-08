@@ -1,134 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>For Sumo ❤️</title>
-
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    overflow: hidden;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ff9aa2, #ffb7b2, #ffd1dc);
-    background-size: 400% 400%;
-    animation: bgFlow 12s ease infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  @keyframes bgFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  .box {
-    z-index: 10;
-    background: linear-gradient(
-      135deg,
-      rgba(0,0,0,0.45),
-      rgba(255,75,110,0.35)
-    );
-    padding: 40px;
-    border-radius: 22px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    animation: pulse 4s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
-  }
-
-  h1 {
-    color: #fff;
-    font-size: 34px;
-  }
-
-  p {
-    color: #ffeef2;
-    font-size: 20px;
-  }
-
-  button {
-    font-size: 18px;
-    padding: 12px 28px;
-    border: none;
-    border-radius: 30px;
-    margin: 15px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  #yes {
-    background: #ff4b6e;
-    color: white;
-    box-shadow: 0 8px 20px rgba(255,75,110,0.6);
-  }
-
-  #no {
-    background: #fff;
-    color: #ff4b6e;
-    position: absolute;
-  }
-
-  button:hover {
-    transform: scale(1.1);
-  }
-
-  .float {
-    position: absolute;
-    bottom: -20px;
-    font-size: 26px;
-    animation: floatUp linear forwards;
-    opacity: 0.9;
-  }
-
-  @keyframes floatUp {
-    from {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateY(-110vh);
-      opacity: 0;
-    }
-  }
-</style>
-</head>
-
-<body>
-
-<div class="box">
-  <h1>Sumo ❤️</h1>
-  <p>
-    You are my favorite thought,<br>
-    my safest place,<br>
-    my forever wish 💕<br><br>
-    Will you be mine forever? 💍
-  </p>
-
-  <button id="yes" onclick="yesClick()">YES 💖</button>
-  <button id="no">NO 🙈</button>
-</div>
-
 <script>
   const noBtn = document.getElementById("no");
+  const box = document.querySelector(".box");
 
-  noBtn.addEventListener("mouseenter", moveNo);
-  noBtn.addEventListener("mousemove", moveNo);
+  // ensure starting position
+  noBtn.style.position = "absolute";
+  noBtn.style.left = "50%";
+  noBtn.style.top = "70%";
+  noBtn.style.transform = "translateX(-50%)";
 
   function moveNo() {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    const boxRect = box.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    const padding = 10;
+
+    const maxX = boxRect.width - btnRect.width - padding;
+    const maxY = boxRect.height - btnRect.height - padding;
+
+    const x = Math.random() * maxX + padding;
+    const y = Math.random() * maxY + padding;
+
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
   }
+
+  // run away BEFORE click happens
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("mousedown", moveNo);
+  noBtn.addEventListener("touchstart", moveNo); // mobile
 
   function yesClick() {
     document.body.innerHTML = `
@@ -152,7 +51,4 @@
 
   setInterval(spawnLove, 350);
 </script>
-
-</body>
-</html>
 
